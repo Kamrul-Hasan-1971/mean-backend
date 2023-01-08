@@ -8,6 +8,8 @@
     "start": "node app.js",
     "start-server": "nodemon app.js"
   },
+  "author": "Md. Kamrul Hasan",
+  "license": "ISC",
   "private": true,
   "dependencies": {
     "bcrypt": "^5.1.0",
