@@ -43,6 +43,18 @@ router.post("/signup",
   ],
  UserController.createUser);
 
-router.post("/login", UserController.userLogin);
+router.post("/login",
+ [
+    body('email')
+      .isEmail()
+      .withMessage('Please enter a valid email address.')
+      .normalizeEmail(),
+    body('password', 'Password has to be valid.')
+      .isLength({ min: 5 })
+      .isAlphanumeric()
+      .trim()
+  ]
+,
+ UserController.userLogin);
 
 module.exports = router;
