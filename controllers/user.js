@@ -1,9 +1,19 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { validationResult } = require('express-validator/check');
 
 const User = require("../models/user");
 
 exports.createUser = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log(errors.array());
+    return res.status(422).json({
+      message: errors.array()[0].msg,
+      validationErrors: errors.array()
+    });
+  }
+
   bcrypt.hash(req.body.password, 10).then(hash => {
     const user = new User({
       email: req.body.email,
@@ -19,10 +29,12 @@ exports.createUser = (req, res, next) => {
       })
       .catch(err => {
         res.status(500).json({
-          message: "Invalid authentication credentials!"
+          message: "Invalid authentication credentials!",
+          error: err
         });
       });
   });
+  
 }
 
 exports.userLogin = (req, res, next) => {
