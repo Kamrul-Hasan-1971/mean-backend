@@ -41,7 +41,8 @@ exports.updatePost = (req, res, next) => {
   });
   Post.updateOne({ _id: req.params.id, creator: req.userData.userId }, post)
     .then(result => {
-      if (result.n > 0) {
+      console.log("update result", result);
+      if (result.modifiedCount > 0 || result.matchedCount > 0) {
         res.status(200).json({ message: "Update successful!" });
       } else {
         res.status(401).json({ message: "Not authorized!" });
@@ -100,8 +101,8 @@ exports.getPost = (req, res, next) => {
 exports.deletePost = (req, res, next) => {
   Post.deleteOne({ _id: req.params.id, creator: req.userData.userId })
     .then(result => {
-      console.log(result);
-      if (result.deletedCount > 0 || result.matchedCount > 0) {
+      console.log("Deletion result", result);
+      if (result.deletedCount > 0) {
         res.status(200).json({ message: "Deletion successful!" });
       } else {
         res.status(401).json({ message: "Not authorized!" });
