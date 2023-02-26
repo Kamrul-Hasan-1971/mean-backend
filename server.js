@@ -1,6 +1,7 @@
 const app = require("./app");
 const debug = require("debug")("node-angular");
 const http = require("http");
+const mongoose = require("mongoose");
 
 const normalizePort = val => {
   var port = parseInt(val, 10);
@@ -48,7 +49,25 @@ const onListening = () => {
 const port = normalizePort(process.env.PORT || "3000");
 app.set("port", port);
 
+const connectDB= async ()=>{
+  mongoose
+  .connect(
+    "mongodb+srv://Hasan1971:"
+    +process.env.MONGO_ATLAS_PW+
+    "@cluster0.2greaqi.mongodb.net/mean?retryWrites=true&w=majority"
+  )
+  .then(() => {
+    console.log("Connected to database!");
+  })
+  .catch(() => {
+    console.log("MongoDb Connection failed!");
+  });
+}
+
+
 const server = http.createServer(app);
 server.on("error", onError);
 server.on("listening", onListening);
-server.listen(port);
+connectDB().then(()=>{
+  server.listen(port);
+})
