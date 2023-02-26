@@ -25,10 +25,11 @@ app.use((req, res, next) => {
   );
   next();
 });
+app.use("/api/posts", postsRoutes);
+app.use("/api/user", userRoutes);
+
 app.get("/:universalURL", (req, res) => {
   res.send("404 URL NOT FOUND");
 });
-app.use("/api/posts", postsRoutes);
-app.use("/api/user", userRoutes);
 
 module.exports = app;
