@@ -1,7 +1,9 @@
 const app = require("./app");
 const debug = require("debug")("node-angular");
 const http = require("http");
+require('dotenv').config();
 const mongoose = require("mongoose");
+mongoose.set('strictQuery', false);
 
 const normalizePort = val => {
   var port = parseInt(val, 10);
@@ -53,7 +55,7 @@ const connectDB= async ()=>{
   mongoose
   .connect(
     "mongodb+srv://Hasan1971:"
-    +process.env.MONGO_ATLAS_PW+
+    +"730025"+
     "@cluster0.2greaqi.mongodb.net/mean?retryWrites=true&w=majority"
   )
   .then(() => {
