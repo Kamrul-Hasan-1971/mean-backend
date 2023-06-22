@@ -55,7 +55,7 @@ const connectDB= async ()=>{
   mongoose
   .connect(
     "mongodb+srv://Hasan1971:"
-    +"730025"+
+    +process.env.MONGO_ATLAS_PW+
     "@cluster0.2greaqi.mongodb.net/mean?retryWrites=true&w=majority"
   )
   .then(() => {
