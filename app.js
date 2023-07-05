@@ -8,7 +8,9 @@ const userRoutes = require("./routes/user");
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: '*'
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/images", express.static(path.join("images")));
