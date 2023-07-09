@@ -1,16 +1,21 @@
 const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
-var cors = require('cors')
+//var cors = require('cors')
 
 const postsRoutes = require("./routes/posts");
 const userRoutes = require("./routes/user");
 
 const app = express();
 
-app.use(cors({
-  origin: '*'
-}));
+app.use(function(req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  next();
+});
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/images", express.static(path.join("images")));
