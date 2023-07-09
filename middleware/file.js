@@ -1,5 +1,7 @@
 const multer = require("multer");
 const fs = require('fs');
+const path = require('path');
+const uploadDir = path.join(__dirname, 'images')
 
 const MIME_TYPE_MAP = {
   "image/png": "png",
@@ -14,8 +16,16 @@ const storage = multer.diskStorage({
     if (isValid) {
       error = null;
     }
-    const uploadDir = 'images/';
-    fs.mkdirSync(uploadDir, { recursive: true });
+    fs.mkdir(uploadDir, { recursive: true }, (err) => {
+      if (err) {
+        console.error('Error creating directory:', err);
+        return res.status(500).json({
+          message: "Failed to create directory for uploading",
+          error: err
+        });
+      }
+      cb(null, uploadDir);
+    });
     cb(error, "images");
   },
   filename: (req, file, cb) => {
