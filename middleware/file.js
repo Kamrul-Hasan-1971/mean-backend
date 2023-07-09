@@ -1,4 +1,5 @@
 const multer = require("multer");
+const fs = require('fs');
 
 const MIME_TYPE_MAP = {
   "image/png": "png",
@@ -13,6 +14,8 @@ const storage = multer.diskStorage({
     if (isValid) {
       error = null;
     }
+    const uploadDir = 'images/';
+    fs.mkdirSync(uploadDir, { recursive: true });
     cb(error, "images");
   },
   filename: (req, file, cb) => {
