@@ -26,6 +26,9 @@ const connectDB= async ()=>{
 }
 connectDB();
 
+var cors=require('cors');
+app.use(cors({origin:true,credentials: true}));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/images", express.static(path.join(__dirname, "images")));
